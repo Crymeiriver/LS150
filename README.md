@@ -43,6 +43,7 @@ I used a SOIC8 clip to connect to the SPI ROM IC and dump the ROM. ROM dump is `
 Using dd and mkimage is possible, but I never managed to extract anything useful due to mkimage format mismatch and other issues with uImage. What worked brilliantly was binwalk. Just run `binwalk -e spi.rom` and voila.
 
 ### Mounts
+```
 rootfs on / type rootfs (rw)
 /dev/root on / type squashfs (ro,relatime)
 proc on /proc type proc (rw,relatime)
@@ -56,6 +57,7 @@ mdev on /dev type ramfs (rw,relatime)
 devpts on /dev/pts type devpts (rw,relatime,mode=600)
 /dev/mtdblock8 on /mnt type jffs2 (rw,relatime)
 /dev/mtdblock9 on /vendor type jffs2 (rw,relatime)
+```
 
 #### jffs2 volumes
 /mnt and /vendor are writable and persistent - a good place to keep files/scripts without having to rebuild initrd.
@@ -80,8 +82,10 @@ rootApp is the 'main app', processes commands `goahead` receives on the `httpapi
 Enable Telnet: there's a command for that! `507269765368656C6C:5f7769696d75645f` - translates to `PrivShell:_wiimud_`
 Calling system() on unsanitized input happens when processing AIRPLAY_PASSWORD nvram variable, we'll use that to achieve persistence without having to patch initrd/go in with the SOIC8 clip.
 Pseudo-code:
-`sprintf(buf, "echo \"%s\" > %s", airplay_password, "/tmp/airplay_password");
-system(buf);`
+```C
+sprintf(buf, "echo \"%s\" > %s", airplay_password, "/tmp/airplay_password");
+system(buf);
+```
 
 Start your Airplay password with `";` and you can make it run whatever you put after that..
 
