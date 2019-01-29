@@ -87,6 +87,8 @@ Examples:
 
 `strings mv_ioguard | grep AXX/MCU` for the full? list
 
+MCU seems to be firmware upgradable(AXX+MCU+UPD/AXX+MCU+RUN).
+
 ####  rootApp
 rootApp is the 'main app', processes commands `goahead` receives on the `httpapi.asp` endpoint and UART commands from `mv_ioguard`
 Enable Telnet: there's a command for that! `507269765368656C6C:5f7769696d75645f` - translates to `PrivShell:_wiimud_`
@@ -106,3 +108,11 @@ AirPlay receiver, has some strings pointing to the capability of communicating w
 #### /system/workdir
 Vendor-supplied extras, most need `LD_LIBRARY_PATH=/system/workdir/lib` to work.
 Curl is available there, wget is available in busybox - to make copying files easier.
+
+### Software update server
+Main WiiMu/Linkplay device update URL: http://s000.linkplay.com:8020/wifi_audio_image_7688/  
+LS150 isn't here :-(
+
+MCU firmware update server: http://s000.linkplay.com:8020/wifi_audio_image_mcu/
+
+Note that MCU model and architecture might differ between devices.
